@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- The password is the pattern attribute of the text input -->
+<html>
+  <head>
+    <title>What's the pattern</title>
+    <link rel="stylesheet" href="/resources/puzzlestyle.css">
+  </head>
+  <body>
+    <span>Password?</span>
+    <form>
+      <input type="text" name="pass" pattern="{{ passphrase }}"/>
+      <input type="submit"/>
+    </form>
+    <p>
+      <!-- Psst! this is the wrong place to look! try looking in the <input> elements in the actual <form>!
+      which one is the text field? what does it say for "pattern"? -->
+      This time, the form won't accept the wrong password at all. (Try submitting some gibberish!)<br>
+      This is done through the <b>pattern</b> attribute in the text input. Find it, and you will know the password!
+    </p>
+  </body>
+</html>

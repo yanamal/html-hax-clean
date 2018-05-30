@@ -10,6 +10,7 @@ from flask import Flask,request,render_template
 
 # Import code from our own files:
 from user import UserProfile
+from puzzleSequenceLogic import userCompletedPuzzle
 
 # make the flask app:
 app = Flask(__name__)
@@ -31,9 +32,11 @@ def render_autopass_puzzle(puzzle):
 
     # get passphrase that was submitted with this request, if any:
     submitted = request.args.get('pass')
-    # see if they submitted the correct one:
+    # if they submitted the correct passphrase:
     if submitted and (submitted == profile.current_passphrase):
-        return 'correct!'
+        # use the current puzzle's path to record the puzzle completion, and return the generated message:
+        return userCompletedPuzzle(request.path)
+
 
     # The following will only happen when the previous "if" was false, and so we did not return "correct"
     # In other words, from here, we can assume that the correct password was NOT submitted.

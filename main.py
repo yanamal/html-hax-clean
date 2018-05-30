@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 # import libraries:
-import os
+import logging, os
+import json
+import random
+
 from google.appengine.api import users
 from flask import Flask,request,render_template
 
@@ -19,15 +22,30 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 def hello():
     return render_template('hello.html', name=users.get_current_user().nickname())
 
-# this special handler function will run for each request, regardless of the specific route, before the actual route handler
-# in this example, we log each request in the user's profile, so that we have a histor of pages visited.
-@app.before_request
-def log_request():
-    # get the user's profile entry from the database (or create one if this user is new to our database)
+# when the user navigates to an autopass puzzle, either display the puzzle,
+# or (if they are submitting a correct solution) tell them that they are correct.
+@app.route('/autopass/<puzzle>')
+def render_autopass_puzzle(puzzle):
+    # get current user's profile:
     profile = UserProfile.get_by_user(users.get_current_user())
 
-    #Take the current page (request.full_path) and append it to the list of visited_pages that we keep in UserProfile.
-    profile.visited_pages.append(request.full_path)
+    # get passphrase that was submitted with this request, if any:
+    submitted = request.args.get('pass')
+    # see if they submitted the correct one:
+    if submitted and (submitted == profile.current_passphrase):
+        return 'correct!'
 
-    # write the changes to the database (without profile.put() the changes don't take effect)
+    # The following will only happen when the previous "if" was false, and so we did not return "correct"
+    # In other words, from here, we can assume that the correct password was NOT submitted.
+
+    # generate a new passphrase:
+    passphrase = 'default' # temporary default passphrase, just in case loading one from file fails.
+    with app.open_resource('data/passphrases.json') as f:
+        passphrases = json.load(f)
+        passphrase = random.choice(passphrases)
+
+    # store it in user's profile:
+    profile.current_passphrase = passphrase
     profile.put()
+
+    return render_template('autopass/'+puzzle, passphrase=passphrase)

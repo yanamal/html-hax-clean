@@ -24,6 +24,13 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 def home():
   return redirect('/resources/welcome.html')
 
+# when the user goes to /next, automatically redirect them to their current puzzle.
+@app.route('/next')
+def nextStep():
+  profile = UserProfile.get_by_user(users.get_current_user())
+  return redirect(profile.current_puzzle)
+
+
 # when the user navigates to an autopass puzzle, either display the puzzle,
 # or (if they are submitting a correct solution) tell them that they are correct.
 @app.route('/autopass/<puzzle>')

@@ -10,14 +10,22 @@ app = Flask(__name__)
 # generate a completion message for the user (as a short HTML snippet).
 # The message includes a link to the next puzzle they should do, if any.
 def userCompletedPuzzle(puzzle):
+    # get the user's profile, and record that they've solved this puzzle:
+    profile = UserProfile.get_by_user(users.get_current_user())
+    profile.solved_puzzles.append(puzzle)
+
     message = 'correct! ' # start composing the message displayed to the user.
     nextPuzzle = getNextPuzzle(puzzle) # use the current puzzle's path to get the puzzle that should be next.
     if nextPuzzle:
         # if there is a next puzzle, then link to it
         message += '<a href='+nextPuzzle+'>Next puzzle!</a>'
+        # also, change the user's current puzzle to nextPuzzle:
+        profile.current_puzzle = nextPuzzle
     else:
         # if there is not a next puzzle, tell the user they are all done
         message += 'All done!'
+
+    profile.put() # commit all the changes we've made to the user profile
     return message
 
 # given the name of the current puzzle,

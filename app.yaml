@@ -6,8 +6,8 @@ threadsafe: yes
 
 # Each handler redirects a set of URLs to be handled by a specific file or a script:
 handlers:
-- url: /stat # this will redirect all urls that start with /stat
-  static_dir: sample_static_dir # it will look for the requested file in the sample_static_dir and not bother the server-side logic at all.
+- url: /resources # this will redirect all urls that start with /stat
+  static_dir: static # it will look for the requested file in the sample_static_dir and not bother the server-side logic at all.
   login: required # we can still require login for static files, too.
 
 - url: .* # this will redirect all URLs not handled by anything else above it.

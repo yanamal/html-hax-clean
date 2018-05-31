@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Too many buttons!</title>
+  </head>
+  <body>
+    <p>The password is <b>{{ passphrase }}</b>. But which button is the correct one?</p>
+    <form>
+      <input type="text" name="pass" value="{{ passphrase }}"/>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <input type="submit"/>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+      <button type="button">Submit</button>
+    </form>
+    <p>
+      I've even filled in the correct password for you using the <b>value</b> attribute.
+      All you have to do is click the right Submit button - the one that's a form input instead of a button.
+      (Mouse over the right element in the Inspector to find it!)
+    </p>
+  </body>
+</html>

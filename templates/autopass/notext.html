@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>I have no text field and I must submit</title>
+  </head>
+  <body>
+    <p>The password is <b>{{ passphrase }}</b>. But how will you submit it without a text field?</p>
+    <form>
+      <input type="radio" name="pass" value="wrongpassword"><span>This is the wrong answer, but select it anyway (and then hit Submit)</span>
+      <br>
+      <input type="submit"/>
+    </form>
+    <p>
+      Oh darn, I used the wrong type of input, and you can't enter the password.
+      Luckily, though, you can change what's being submitted in the URL.
+    </p>
+  </body>
+</html>

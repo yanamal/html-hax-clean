@@ -25,5 +25,6 @@ The logic for each type of puzzle (which is just the auto-passphrase type, for n
 
 ### Puzzle content
 There are now 5 puzzles that should introduce the user to the basics of HTML structure, and to the practice of using their browser to examine and manipulate HTML.
+There is also a static welcome page which explains how to play the game.
 
 [This](https://github.com/yanamal/html-hax-clean/commit/56fb7cced0d7ee2dabf0bae43edd938ddca30dd2) is a commit which just adds one puzzle, so it is a good example to look at to understand what you need to do to add a puzzle.

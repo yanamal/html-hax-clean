@@ -6,7 +6,7 @@ import json
 import random
 
 from google.appengine.api import users
-from flask import Flask,request,render_template
+from flask import Flask,request,render_template,redirect
 
 # Import code from our own files:
 from user import UserProfile
@@ -19,9 +19,10 @@ app = Flask(__name__)
 if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
     app.debug = True  # with this setting on, the cause of Python errors is displayed in App Engine logs.
 
+# when the user goes to home page, redirect to static welcome page
 @app.route('/')
-def hello():
-    return render_template('hello.html', name=users.get_current_user().nickname())
+def home():
+  return redirect('/resources/welcome.html')
 
 # when the user navigates to an autopass puzzle, either display the puzzle,
 # or (if they are submitting a correct solution) tell them that they are correct.
